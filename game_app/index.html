@@ -80,6 +80,7 @@
             </div>
 
             <div class="game-middle">
+                <!-- Player 1 Panel -->
                 <div class="player-panel player1" id="panel1">
                     <div class="player-name">Player 1</div>
                     <div class="stat-item">
@@ -92,14 +93,23 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">⚡ Actions:</span>
-                        <span class="stat-value" style="color: #27ae60;" id="p1-actions">0</span>
+                        <span class="stat-value" id="p1-actions" style="color:#27ae60;">0</span>
+                    </div>
+
+                    <!-- Player 1 Dice -->
+                    <div class="dice-container">
+                        <div class="dice" id="diceDisplay1">🎲</div><br>
+                        <button class="roll-button" id="rollBtn1" onclick="rollDice(1)">Roll Dice</button>
                     </div>
                 </div>
+
+
 
                 <div class="board-area">
                     <div class="board-grid" id="gameBoard"></div>
                 </div>
 
+                <!-- Player 2 Panel -->
                 <div class="player-panel player2" id="panel2">
                     <div class="player-name">Player 2</div>
                     <div class="stat-item">
@@ -112,21 +122,20 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">⚡ Actions:</span>
-                        <span class="stat-value" style="color: #27ae60;" id="p2-actions">0</span>
+                        <span class="stat-value" id="p2-actions" style="color:#27ae60;">0</span>
+                    </div>
+
+                    <!-- Player 2 Dice -->
+                    <div class="dice-container">
+                        <div class="dice" id="diceDisplay2">🎲</div><br>
+                        <button class="roll-button" id="rollBtn2" onclick="rollDice(2)">Roll Dice</button>
                     </div>
                 </div>
+
+
             </div>
 
-            <div class="game-bottom-bar">
-                <div class="dice-container">
-                    <div class="dice" id="diceDisplay">🎲</div>
-                    <br>
-                    <button class="roll-button" id="rollBtn" onclick="rollDice()">Roll Dice</button>
-                </div>
-                <div class="message-display" id="messageDisplay">
-                    🎮 Player 1's turn! Roll the dice to begin your climate journey!
-                </div>
-            </div>
+
         </div>
     </div>
 

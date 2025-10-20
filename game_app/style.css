@@ -151,11 +151,8 @@
         }
 
         .rules-content {
-            max-width: 1000px;
-            /* background: rgba(255, 255, 255, 0.95); */
             padding: 40px;
             border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             margin: 20px auto;
             height: 100%;
         }
@@ -247,8 +244,11 @@
 
         .game-top-bar {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            /* center all content horizontally */
             align-items: center;
+            position: relative;
+            /* for absolute button positioning */
             background: rgba(255, 255, 255, 0.95);
             padding: 15px 30px;
             border-radius: 20px;
@@ -259,20 +259,16 @@
             font-size: 2em;
             font-weight: bold;
             color: #27ae60;
+            text-align: center;
         }
 
         .exit-btn {
-            padding: 12px 30px;
-            font-size: 1.1em;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
         }
+
 
         .exit-btn:hover {
             transform: translateY(-3px);
@@ -282,9 +278,40 @@
         .game-middle {
             display: grid;
             grid-template-columns: 300px 1fr 300px;
-            gap: 15px;
-            overflow: hidden;
+            /* board fills all remaining space */
+            gap: 20px;
+            align-items: stretch;
+            height: calc(100vh - 180px);
         }
+
+
+        .board-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            overflow: hidden;
+            /* ❌ Removes scroll bar */
+        }
+
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            width: 100%;
+            height: 100%;
+            justify-items: center;
+            align-items: center;
+            overflow: hidden;
+            /* ensure no scroll bars */
+        }
+
+
 
         .player-panel {
             background: rgba(255, 255, 255, 0.95);
@@ -393,25 +420,32 @@
 
         .board-tile {
             position: relative;
+            /* ✅ Add this line */
+            width: 100%;
             aspect-ratio: 1;
-            border: 4px solid;
-            border-radius: 15px;
-            padding: 10px;
+            max-width: 110px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            font-size: 0.9em;
+            align-items: center;
+            border-radius: 15px;
             text-align: center;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+
+
         .board-tile:hover {
-            transform: scale(1.05);
-            z-index: 10;
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
         }
+
+        .board-tile div {
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
 
         .board-tile.start {
             background: linear-gradient(135deg, #9b59b6, #8e44ad);
@@ -457,9 +491,16 @@
         }
 
         .tile-icon {
-            font-size: 2em;
-            margin-bottom: 5px;
+            font-size: 3em;
+            margin-bottom: 10px;
         }
+
+        .board-tile {
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 15px;
+        }
+
 
         .tile-players {
             position: absolute;
@@ -571,12 +612,21 @@
         .gameover-content {
             text-align: center;
             background: white;
-            padding: 60px 50px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            max-width: 700px;
-            animation: fadeInUp 1s ease-out;
+            padding: 30px 25px;
+            /* smaller padding */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            /* narrower width */
+            width: 90%;
+            /* responsive width for smaller screens */
+            max-height: 80vh;
+            /* ensure it never exceeds viewport */
+            overflow-y: auto;
+            /* allow scroll if content still overflows */
+            animation: fadeInUp 0.8s ease-out;
         }
+
 
         .trophy {
             font-size: 8em;
@@ -596,20 +646,19 @@
         }
 
         .winner-title {
-            font-size: 3.5em;
-            font-weight: bold;
-            background: linear-gradient(135deg, #f39c12, #e74c3c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 20px 0;
+            font-size: 2.5em;
+            /* smaller title */
+            margin: 15px 0;
         }
 
         .final-stats {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 20px;
-            margin: 30px 0;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
         }
+
+        
+
 
         .final-stats h3 {
             font-size: 2em;
@@ -619,8 +668,8 @@
 
         .player-final {
             background: white;
-            padding: 20px;
-            margin: 15px 0;
+            padding: 15px;
+            margin: 10px 0;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }

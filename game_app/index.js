@@ -84,88 +84,131 @@ function createBoard() {
         var tileDiv = document.createElement('div');
         tileDiv.className = 'board-tile ' + tile.type;
         tileDiv.id = 'tile-' + i;
+
+        // players container always present and has deterministic id
         tileDiv.innerHTML = '<div class="tile-icon">' + tile.icon + '</div>' +
-            '<div>' + tile.name + '</div>' +
+            '<div class="tile-title">' + tile.name + '</div>' +
             '<div class="tile-players" id="players-' + i + '"></div>';
         board.appendChild(tileDiv);
     }
 
+    // Place markers based on current game state
     updateMarkers();
 }
 
+
 function updateMarkers() {
+    // Clear any existing markers inside every tile players container
     var playerDivs = document.querySelectorAll('.tile-players');
     for (var i = 0; i < playerDivs.length; i++) {
         playerDivs[i].innerHTML = '';
     }
 
+    // For each player, find the players-<pos> container and append a marker
     for (var i = 0; i < game.players.length; i++) {
         var player = game.players[i];
-        var playersDiv = document.getElementById('players-' + player.pos);
+        // Clamp position to valid tile index
+        var pos = Math.max(0, Math.min(player.pos, tiles.length - 1));
+        var playersDiv = document.getElementById('players-' + pos);
+
         if (playersDiv) {
             var marker = document.createElement('div');
             marker.className = 'player-marker marker-p' + player.id;
+            marker.title = 'Player ' + player.id;
             playersDiv.appendChild(marker);
+        } else {
+            // If container is missing (shouldn't happen) put marker on Start (pos 0)
+            console.warn('Missing players-' + pos + ' container; placing marker at Start for player', player.id);
+            var fallback = document.getElementById('players-0');
+            if (fallback) {
+                var m2 = document.createElement('div');
+                m2.className = 'player-marker marker-p' + player.id;
+                fallback.appendChild(m2);
+            }
         }
     }
 }
+
 
 function updateUI() {
     for (var i = 0; i < game.players.length; i++) {
         var player = game.players[i];
         var pNum = player.id;
 
-        document.getElementById('p' + pNum + '-carbon').textContent = player.carbon;
-        document.getElementById('p' + pNum + '-pos').textContent = player.pos + '/25';
-        document.getElementById('p' + pNum + '-actions').textContent = player.actions;
-
         var carbonEl = document.getElementById('p' + pNum + '-carbon');
-        carbonEl.className = 'stat-value carbon-value';
-        if (player.carbon < 40) {
-            carbonEl.className += ' carbon-low';
-        } else if (player.carbon < 70) {
-            carbonEl.className += ' carbon-med';
-        } else {
-            carbonEl.className += ' carbon-high';
+        var posEl = document.getElementById('p' + pNum + '-pos');
+        var actionsEl = document.getElementById('p' + pNum + '-actions');
+
+        if (carbonEl) carbonEl.textContent = player.carbon;
+        if (posEl) posEl.textContent = player.pos + '/' + (tiles.length - 1);
+        if (actionsEl) actionsEl.textContent = player.actions;
+
+        if (carbonEl) {
+            carbonEl.className = 'stat-value carbon-value';
+            if (player.carbon < 40) carbonEl.className += ' carbon-low';
+            else if (player.carbon < 70) carbonEl.className += ' carbon-med';
+            else carbonEl.className += ' carbon-high';
+        }
+
+        // highlight active panel
+        var panelId = 'panel' + pNum;
+        var panelEl = document.getElementById(panelId);
+        if (panelEl) {
+            if (game.currentPlayer === i) panelEl.classList.add('active');
+            else panelEl.classList.remove('active');
         }
     }
-
-    document.getElementById('panel1').className = game.currentPlayer === 0 ? 'player-panel player1 active' : 'player-panel player1';
-    document.getElementById('panel2').className = game.currentPlayer === 1 ? 'player-panel player2 active' : 'player-panel player2';
 }
 
-function rollDice() {
+
+function rollDice(playerId) {
     if (game.gameOver) return;
 
-    var btn = document.getElementById('rollBtn');
-    btn.disabled = true;
+    // check it's actually the player's turn
+    if (game.currentPlayer + 1 !== playerId) {
+        alert("It's not your turn!");
+        return;
+    }
 
-    var diceDisplay = document.getElementById('diceDisplay');
+    var btn = document.getElementById('rollBtn' + playerId);
+    if (btn) btn.disabled = true;
+
+    var diceDisplay = document.getElementById('diceDisplay' + playerId);
     var diceIcons = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
     var rolls = 0;
     var interval = setInterval(function () {
-        diceDisplay.textContent = diceIcons[Math.floor(Math.random() * 6)];
+        if (diceDisplay) diceDisplay.textContent = diceIcons[Math.floor(Math.random() * 6)];
         rolls++;
         if (rolls >= 10) {
             clearInterval(interval);
-            executeMove();
+            executeMove(playerId);
         }
     }, 100);
 }
 
-function executeMove() {
+
+function executeMove(playerId) {
+    // Convert playerId (1 or 2) to array index
+    var pIndex = playerId - 1;
+    var player = game.players[pIndex];
+
+    // Roll result
     var roll = Math.floor(Math.random() * 6) + 1;
     var diceIcons = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-    document.getElementById('diceDisplay').textContent = diceIcons[roll - 1];
 
-    var player = game.players[game.currentPlayer];
+    // update the correct dice display
+    var diceDisplay = document.getElementById('diceDisplay' + playerId);
+    if (diceDisplay) diceDisplay.textContent = diceIcons[roll - 1];
+
+    // calculate new position (clamp to finish)
     var newPos = Math.min(player.pos + roll, tiles.length - 1);
     player.pos = newPos;
 
     var tile = tiles[newPos];
     var message = 'Player ' + player.id + ' rolled ' + roll + '! ' + tile.msg;
 
+    // apply carbon and actions effects
     if (tile.carbon !== 0) {
         player.carbon = Math.max(0, player.carbon + tile.carbon);
         if (tile.carbon < 0) {
@@ -173,36 +216,54 @@ function executeMove() {
         }
     }
 
-    document.getElementById('messageDisplay').textContent = message;
-    showPopup(tile);
+    // show textual message and detailed popup (if you use showPopup(tile))
+    var msgEl = document.getElementById('messageDisplay');
+    if (msgEl) msgEl.textContent = message;
 
+    // Show detailed popup if you use that function
+    if (typeof showPopup === 'function') {
+        showPopup(tile);
+    }
+
+    // Update UI and board markers
     updateUI();
     updateMarkers();
 
+    // Check finish
     if (newPos === tiles.length - 1) {
-        setTimeout(function () {
-            endGame();
-        }, 1500);
-    } else {
-        game.currentPlayer = (game.currentPlayer + 1) % 2;
-        setTimeout(function () {
-            document.getElementById('rollBtn').disabled = false;
-            var nextPlayer = game.currentPlayer + 1;
-            document.getElementById('messageDisplay').textContent = 'Player ' + nextPlayer + ' turn! Roll the dice!';
-        }, 1500);
-    }
+    setTimeout(function () {
+        endGame(playerId);
+    }, 1500);
+    return;
 }
 
-function endGame() {
+
+    // Advance turn to next player
+    game.currentPlayer = (game.currentPlayer + 1) % game.players.length;
+
+    // Re-enable the next player's button after a short delay (so they can't click immediately)
+    setTimeout(function () {
+        var nextPlayerId = game.currentPlayer + 1;
+        var nextBtn = document.getElementById('rollBtn' + nextPlayerId);
+        if (nextBtn) nextBtn.disabled = false;
+
+        var nextMsgEl = document.getElementById('messageDisplay');
+        if (nextMsgEl) nextMsgEl.textContent = '🎲 Player ' + nextPlayerId + "'s turn!";
+
+    }, 600);
+}
+
+
+function endGame(playerId) {
     game.gameOver = true;
-    var winner = game.players[game.currentPlayer];
+    var winner = game.players[playerId - 1];
 
     document.getElementById('winnerName').textContent = 'Player ' + winner.id + ' Wins!';
 
     var statsHTML = '';
     for (var i = 0; i < game.players.length; i++) {
         var p = game.players[i];
-        var bgColor = i === game.currentPlayer ? 'background: linear-gradient(135deg, #f1c40f, #f39c12);' : '';
+        var bgColor = i === playerId - 1 ? 'background: linear-gradient(135deg, #f1c40f, #f39c12);' : '';
         statsHTML += '<div class="player-final" style="' + bgColor + '">';
         statsHTML += '<h4>Player ' + p.id + '</h4>';
         statsHTML += '<p><strong>Final Carbon:</strong> ' + p.carbon + '</p>';
@@ -214,6 +275,7 @@ function endGame() {
     document.getElementById('finalStatsContent').innerHTML = statsHTML;
     showScreen('gameOverScreen');
 }
+
 
 // popup
 function showPopup(tile) {

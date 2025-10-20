@@ -1,0 +1,6 @@
+1. edit play screen following: - each player panel have a dice - board area is full
+2. make board area smaller and icon and title i bigger
+3.config board area : remove scroll bar and grow up width to full content
+4. player are errors: it not update position in board area
+5. player marker is not in board area. config them
+6.make game over screen smaller to see all of them
