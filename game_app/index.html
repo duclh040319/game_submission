@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Climate Heroes: Save the Planet</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Menu Screen -->
     <div id="menuScreen" class="screen active">
@@ -22,10 +24,12 @@
     <div id="rulesScreen" class="screen">
         <div class="rules-content">
             <h2 class="rules-title">🌱 How to Play Climate Heroes</h2>
-            
+
             <div class="rule-box">
                 <h3>🎯 Mission</h3>
-                <p>Be the first Climate Hero to reach Net Zero by implementing sustainable solutions and overcoming environmental challenges. Start with a carbon footprint of 100 and reduce it through strategic actions!</p>
+                <p>Be the first Climate Hero to reach Net Zero by implementing sustainable solutions and overcoming
+                    environmental challenges. Start with a carbon footprint of 100 and reduce it through strategic
+                    actions!</p>
             </div>
 
             <div class="rule-box">
@@ -58,7 +62,9 @@
 
             <div class="rule-box">
                 <h3>🌍 Real Climate Actions</h3>
-                <p>Learn about actual solutions like solar energy, wind farms, electric vehicles, reforestation, sustainable agriculture, and more. Each action you take in the game represents real-world climate initiatives that help reduce carbon emissions!</p>
+                <p>Learn about actual solutions like solar energy, wind farms, electric vehicles, reforestation,
+                    sustainable agriculture, and more. Each action you take in the game represents real-world climate
+                    initiatives that help reduce carbon emissions!</p>
             </div>
 
             <button class="menu-button" onclick="showMenu()">⬅ Back to Menu</button>
@@ -132,7 +138,7 @@
             <p style="font-size: 1.8em; color: #27ae60; margin: 20px 0;">
                 🎉 Climate Hero Achievement Unlocked! 🎉
             </p>
-            
+
             <div class="final-stats">
                 <h3>📊 Final Results</h3>
                 <div id="finalStatsContent"></div>
@@ -143,6 +149,16 @@
         </div>
     </div>
 
+    <!-- Popup Box -->
+    <div id="popupBox" class="popup-box">
+        <div class="popup-content" id="popupContent">
+            <p id="popupText"></p>
+            <button id="popupClose" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+
     <script src="index.js"></script>
 </body>
+
 </html>

@@ -9,32 +9,33 @@ var game = {
 };
 
 var tiles = [
-    { type: 'start', name: 'Start', icon: '🚀', carbon: 0, msg: 'Begin your climate journey!' },
-    { type: 'action', name: 'Solar Power', icon: '☀️', carbon: -15, msg: 'Installed solar panels! -15 carbon' },
-    { type: 'neutral', name: 'Research', icon: '🔬', carbon: 0, msg: 'Researching solutions...' },
-    { type: 'action', name: 'Wind Energy', icon: '💨', carbon: -18, msg: 'Built wind turbines! -18 carbon' },
-    { type: 'crisis', name: 'Wildfire', icon: '🔥', carbon: 12, msg: 'Wildfire disaster! +12 carbon' },
-    { type: 'action', name: 'Plant Trees', icon: '🌳', carbon: -10, msg: 'Reforestation complete! -10 carbon' },
-    { type: 'neutral', name: 'Education', icon: '📚', carbon: 0, msg: 'Learning about climate!' },
-    { type: 'action', name: 'Public Transit', icon: '🚊', carbon: -12, msg: 'Metro expansion! -12 carbon' },
-    { type: 'crisis', name: 'Heat Wave', icon: '🌡️', carbon: 10, msg: 'Extreme heat! +10 carbon' },
-    { type: 'action', name: 'Electric Cars', icon: '🔌', carbon: -14, msg: 'EV infrastructure! -14 carbon' },
-    { type: 'neutral', name: 'Summit', icon: '🏛️', carbon: 0, msg: 'Climate conference' },
-    { type: 'crisis', name: 'Flood', icon: '🌊', carbon: 15, msg: 'Coastal flooding! +15 carbon' },
-    { type: 'action', name: 'Recycling', icon: '♻️', carbon: -8, msg: 'Recycling program! -8 carbon' },
-    { type: 'action', name: 'Green Buildings', icon: '🏢', carbon: -16, msg: 'Eco buildings! -16 carbon' },
-    { type: 'neutral', name: 'Innovation Lab', icon: '💡', carbon: 0, msg: 'Developing tech...' },
-    { type: 'crisis', name: 'Drought', icon: '🏜️', carbon: 9, msg: 'Water crisis! +9 carbon' },
-    { type: 'action', name: 'Clean Energy', icon: '⚡', carbon: -20, msg: 'Renewable grid! -20 carbon' },
-    { type: 'neutral', name: 'Policy Forum', icon: '📋', carbon: 0, msg: 'Making policies...' },
-    { type: 'crisis', name: 'Storm', icon: '⛈️', carbon: 13, msg: 'Hurricane damage! +13 carbon' },
-    { type: 'action', name: 'Composting', icon: '🌱', carbon: -9, msg: 'Organic waste program! -9 carbon' },
-    { type: 'action', name: 'Ocean Cleanup', icon: '🌊', carbon: -11, msg: 'Ocean restoration! -11 carbon' },
-    { type: 'neutral', name: 'Community', icon: '👥', carbon: 0, msg: 'Community organizing' },
-    { type: 'action', name: 'Smart Grid', icon: '🔋', carbon: -22, msg: 'Energy efficiency! -22 carbon' },
-    { type: 'crisis', name: 'Smog', icon: '🏭', carbon: 11, msg: 'Air pollution! +11 carbon' },
-    { type: 'finish', name: 'Net Zero!', icon: '🏆', carbon: -25, msg: 'Climate Hero! You reached Net Zero!' }
+    { type: 'start', name: 'Start', icon: '🚀', carbon: 0, msg: 'Begin your climate journey!', reason: 'The adventure begins — time to fight climate change!' },
+    { type: 'action', name: 'Solar Power', icon: '☀️', carbon: -15, msg: 'Installed solar panels! -15 carbon', reason: 'Solar panels produce renewable electricity and reduce reliance on fossil fuels.' },
+    { type: 'neutral', name: 'Research', icon: '🔬', carbon: 0, msg: 'Researching solutions...', reason: 'You’re studying sustainable innovations — no direct carbon impact yet.' },
+    { type: 'action', name: 'Wind Energy', icon: '💨', carbon: -18, msg: 'Built wind turbines! -18 carbon', reason: 'Wind turbines generate clean power without CO₂ emissions.' },
+    { type: 'crisis', name: 'Wildfire', icon: '🔥', carbon: 12, msg: 'Wildfire disaster! +12 carbon', reason: 'Wildfires release large amounts of carbon stored in forests.' },
+    { type: 'action', name: 'Plant Trees', icon: '🌳', carbon: -10, msg: 'Reforestation complete! -10 carbon', reason: 'Trees absorb carbon dioxide and improve air quality.' },
+    { type: 'neutral', name: 'Education', icon: '📚', carbon: 0, msg: 'Learning about climate!', reason: 'Raising awareness is key, but no immediate carbon change.' },
+    { type: 'action', name: 'Public Transit', icon: '🚊', carbon: -12, msg: 'Metro expansion! -12 carbon', reason: 'Public transport reduces car usage and fuel consumption.' },
+    { type: 'crisis', name: 'Heat Wave', icon: '🌡️', carbon: 10, msg: 'Extreme heat! +10 carbon', reason: 'Heat waves increase energy use for cooling and strain resources.' },
+    { type: 'action', name: 'Electric Cars', icon: '🔌', carbon: -14, msg: 'EV infrastructure! -14 carbon', reason: 'Electric vehicles cut tailpipe emissions and use cleaner energy.' },
+    { type: 'neutral', name: 'Summit', icon: '🏛️', carbon: 0, msg: 'Climate conference', reason: 'World leaders discuss climate policy — progress takes time.' },
+    { type: 'crisis', name: 'Flood', icon: '🌊', carbon: 15, msg: 'Coastal flooding! +15 carbon', reason: 'Floods destroy forests and infrastructure, releasing stored CO₂.' },
+    { type: 'action', name: 'Recycling', icon: '♻️', carbon: -8, msg: 'Recycling program! -8 carbon', reason: 'Recycling saves resources and reduces landfill emissions.' },
+    { type: 'action', name: 'Green Buildings', icon: '🏢', carbon: -16, msg: 'Eco buildings! -16 carbon', reason: 'Energy-efficient buildings reduce heating and cooling emissions.' },
+    { type: 'neutral', name: 'Innovation Lab', icon: '💡', carbon: 0, msg: 'Developing tech...', reason: 'Innovation labs work on future clean technologies.' },
+    { type: 'crisis', name: 'Drought', icon: '🏜️', carbon: 9, msg: 'Water crisis! +9 carbon', reason: 'Droughts harm agriculture and ecosystems, increasing emissions indirectly.' },
+    { type: 'action', name: 'Clean Energy', icon: '⚡', carbon: -20, msg: 'Renewable grid! -20 carbon', reason: 'Transitioning to renewables eliminates fossil fuel dependence.' },
+    { type: 'neutral', name: 'Policy Forum', icon: '📋', carbon: 0, msg: 'Making policies...', reason: 'Policy development takes time but shapes long-term emission reductions.' },
+    { type: 'crisis', name: 'Storm', icon: '⛈️', carbon: 13, msg: 'Hurricane damage! +13 carbon', reason: 'Storms damage ecosystems and infrastructure, releasing carbon.' },
+    { type: 'action', name: 'Composting', icon: '🌱', carbon: -9, msg: 'Organic waste program! -9 carbon', reason: 'Composting reduces methane emissions from landfills.' },
+    { type: 'action', name: 'Ocean Cleanup', icon: '🌊', carbon: -11, msg: 'Ocean restoration! -11 carbon', reason: 'Removing plastic waste helps restore marine ecosystems.' },
+    { type: 'neutral', name: 'Community', icon: '👥', carbon: 0, msg: 'Community organizing', reason: 'Communities unite to push sustainable change together.' },
+    { type: 'action', name: 'Smart Grid', icon: '🔋', carbon: -22, msg: 'Energy efficiency! -22 carbon', reason: 'Smart grids optimize energy distribution and minimize waste.' },
+    { type: 'crisis', name: 'Smog', icon: '🏭', carbon: 11, msg: 'Air pollution! +11 carbon', reason: 'Industrial smog adds to carbon and health problems.' },
+    { type: 'finish', name: 'Net Zero!', icon: '🏆', carbon: -25, msg: 'Climate Hero! You reached Net Zero!', reason: 'You balanced all emissions — the planet thanks you!' }
 ];
+
 
 function showScreen(screenId) {
     var screens = document.querySelectorAll('.screen');
@@ -173,6 +174,8 @@ function executeMove() {
     }
 
     document.getElementById('messageDisplay').textContent = message;
+    showPopup(tile);
+
     updateUI();
     updateMarkers();
 
@@ -212,6 +215,28 @@ function endGame() {
     showScreen('gameOverScreen');
 }
 
+// popup
+function showPopup(tile) {
+    const popup = document.getElementById("popupBox");
+    const popupText = document.getElementById("popupText");
+    popupText.innerHTML = `
+        <strong>${tile.icon} ${tile.name}</strong><br>
+        <em>${tile.msg}</em><br><br>
+        <span style="font-size:0.95em;color:#2c3e50;">${tile.reason}</span>
+    `;
+    popup.style.display = "flex";
+    // setTimeout(() => { popup.style.display = "none"; }, 3000);//optional to auto close popup
+}
+
+
+function closePopup() {
+    document.getElementById("popupBox").style.display = "none";
+}
+
+
+
+
 window.onload = function () {
     showScreen('menuScreen');
 };
+
