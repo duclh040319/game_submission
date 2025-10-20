@@ -26,7 +26,7 @@ This game was designed to raise awareness about climate action and sustainabilit
 ## 📁 Project Structure
 
 ```
-climate-heroes/
+game/
 │
 ├── index.html          # Main HTML structure with all game screens
 ├── style.css           # Complete styling, animations, and responsive design
