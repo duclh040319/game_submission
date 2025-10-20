@@ -1,0 +1,14 @@
+The game should take the form of a board game, card game, dice game, or any game topic of simple web game format.
+The gameplay mechanics must directly connect to the chosen social issue, making the game both educational and engaging.
+Suggested themes may include (but are not limited to):
+Climate change & sustainability
+Access to education
+Mental health & wellbeing
+Social equity & inclusion
+Community resilience
+Game Requirements Your game must include at least the following screens/views:
+Menu
+Play Please free to add other approriate screens as you would like. Additional guidelines:
+The game must be in 2D. (Optional: or 3D if your team is able.)
+Game assets (sprites, backgrounds, sound effects, code logics, etc.) can also be generated using your choices of AI models such as ChatGPT, Gemini, Nano Banana, Sora, …, where appropriate.
+The game must only use HTML, CSS and Javascript. Feel free to use any HTML, CSS and JavaScript libraries/frameworks as long as it can run fully on the browser (only on front-end) without a need to install any additional installation or setup or backend
